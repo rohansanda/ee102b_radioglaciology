@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.signal
 
+
 def pulse_compress_one_trace(trace_input, ref_chirp_time_domain, blanking=50, detrend_type='linear'):
     trace = np.zeros_like(trace_input)
     trace[blanking:] = trace_input[blanking:]
@@ -22,9 +23,11 @@ def pulse_compress(d):
     
     return data_out
 
-def plot_radargram(data_pulse_compressed, title=""):
+def plot_radargram(data_pulse_compressed, title="", bed_x=None, bed_y=None, bed=False):
     fig, ax = plt.subplots(figsize=(6,6), facecolor='white')
     im = ax.imshow(data_pulse_compressed.T, cmap='gray', vmin=100, vmax=230)
+    if bed:
+        ax.plot(bed_x, bed_y, 'r', linewidth=2)
     ax.set_xlabel('Traces (slow time)')
     ax.set_ylabel('Samples (fast time)')
     ax.set_title(title)
